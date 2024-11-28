@@ -1,11 +1,15 @@
 package com.sparta.currency_user.entity;
 
+import com.sparta.currency_user.dto.ExchangeRequestDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 @Entity
 @Getter
-public class Exchange {
+public class Exchange extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,23 +22,33 @@ public class Exchange {
     private Currency currency;
 
     @Column
-    private Long amount_in_krw;
+    private Long amountInKrw;
 
     @Column
-    private Double amount_after_exchange;
+    private Double amountAfterExchange;
 
     @Column
-    private String Status;
+    private ExchangeEnum status;
 
     public Exchange() {
     }
 
-    public Exchange(Long id, User user, Currency currency, Long amount_in_krw, Double amount_after_exchange, String status) {
+    public Exchange(User user, Currency currency, ExchangeRequestDto requestDto) {
+        BigDecimal amountInKrwBigDecimal = BigDecimal.valueOf(requestDto.getAmountInKrw());
+
+        this.amountInKrw = requestDto.getAmountInKrw();
+        this.amountAfterExchange = amountInKrwBigDecimal.divide(currency.getExchangeRate(), 2, RoundingMode.HALF_EVEN).doubleValue();
+        this.status = ExchangeEnum.normal;
+        this.user = user;
+        this.currency = currency;
+    }
+
+    public Exchange(Long id, User user, Currency currency, Long amountInKrw, Double amountAfterExchange, String status) {
         this.id = id;
         this.user = user;
         this.currency = currency;
-        this.amount_in_krw = amount_in_krw;
-        this.amount_after_exchange = amount_after_exchange;
-        this.Status = status;
+        this.amountInKrw = amountInKrw;
+        this.amountAfterExchange = amountAfterExchange;
+        this.status = ExchangeEnum.valueOf(status);
     }
 }
