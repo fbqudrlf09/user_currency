@@ -1,6 +1,6 @@
 package com.sparta.currency_user.controller;
 
-import com.sparta.currency_user.dto.ExchangeFindAllRequestDto;
+import com.sparta.currency_user.dto.ExchangeUserIdRequestDto;
 import com.sparta.currency_user.dto.ExchangeRequestDto;
 import com.sparta.currency_user.dto.ExchangeResponseDto;
 import com.sparta.currency_user.service.ExchangeService;
@@ -27,7 +27,7 @@ public class ExchangeController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ExchangeResponseDto>> findAllByUser(@RequestBody ExchangeFindAllRequestDto requestDto) {
+    public ResponseEntity<List<ExchangeResponseDto>> findAllByUser(@RequestBody ExchangeUserIdRequestDto requestDto) {
 
         List<ExchangeResponseDto> responseDtoList = exchangeService.findAllByUser(requestDto);
 
@@ -35,5 +35,15 @@ public class ExchangeController {
                 responseDtoList,
                 HttpStatus.OK
         );
+    }
+
+    @PatchMapping("/{exchangeId}")
+    public ResponseEntity<ExchangeResponseDto> updateExchange(
+            @PathVariable Long exchangeId,
+            @RequestBody ExchangeUserIdRequestDto requestDto) {
+
+        ExchangeResponseDto responseDto = exchangeService.updateExchange(exchangeId ,requestDto);
+
+        return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 }

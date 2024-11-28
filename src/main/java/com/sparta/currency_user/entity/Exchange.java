@@ -3,6 +3,7 @@ package com.sparta.currency_user.entity;
 import com.sparta.currency_user.dto.ExchangeRequestDto;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -28,6 +29,7 @@ public class Exchange extends BaseEntity{
     private Double amountAfterExchange;
 
     @Column
+    @Setter
     private ExchangeEnum status;
 
     public Exchange() {
