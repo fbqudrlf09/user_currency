@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Entity
 @Getter
-public class UserCurrency {
+public class Exchange {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,10 +26,10 @@ public class UserCurrency {
     @Column
     private String Status;
 
-    public UserCurrency() {
+    public Exchange() {
     }
 
-    public UserCurrency(Long id, User user, Currency currency, Long amount_in_krw, Double amount_after_exchange, String status) {
+    public Exchange(Long id, User user, Currency currency, Long amount_in_krw, Double amount_after_exchange, String status) {
         this.id = id;
         this.user = user;
         this.currency = currency;
