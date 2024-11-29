@@ -1,6 +1,6 @@
 package com.sparta.currency_user.entity;
 
-public enum UserCurrencyEnum {
+public enum ExchangeEnum {
     normal,
     cancelled
 }
